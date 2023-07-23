@@ -196,7 +196,7 @@ class HiveBoard(object):
             else:
                 n = None
             
-            self.place(Tile(c,i), coord)
+            self.place(Tile(c,i, n), coord)
         
     def move(self, origin, dest):
         """

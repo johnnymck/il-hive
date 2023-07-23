@@ -979,6 +979,19 @@ class HiveBoard(object):
         #for some reason this works but StopIteration doesn't?
         except Exception:
             return True
+    
+    @property
+    def pieces_in_play(self):
+        """Returns a list of all pieces on the board """
+        pieces = [stack for _, stack in self._pieces.items()]
+        #flatten list to 1D output
+        def flatten(S):
+            if S == []:
+                return S
+            if isinstance(S[0], list):
+                return flatten(S[0]) + flatten(S[1:])
+            return S[:1] + flatten(S[1:])
+        return flatten(pieces)
       
 
 class IllegalMove(Exception):

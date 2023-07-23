@@ -185,7 +185,7 @@ class HiveBoard(object):
             if stack[-1].number != None:
                 hg.annotate(coords, stack[-1].color.value + stack[-1].insect.value + str(stack[-1].number))
             else:
-            hg.annotate(coords, stack[-1].color.value + stack[-1].insect.value)
+                hg.annotate(coords, stack[-1].color.value + stack[-1].insect.value)
 
         return str(hg)
         

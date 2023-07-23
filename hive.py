@@ -257,6 +257,7 @@ class HiveBoard(object):
         return self._pieces[coords]
     
     def get_current_position(self, piece_string):
+        """ Returns a single co-ordinate of piece by string `piece_string`, or None if isn't in play """
         try:
             return self.find_one(Tile.from_string(piece_string))[0]
         except TypeError:

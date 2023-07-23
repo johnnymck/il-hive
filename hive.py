@@ -256,6 +256,12 @@ class HiveBoard(object):
         """Returns a list of all tiles at a given coordinate"""
         return self._pieces[coords]
     
+    def get_current_position(self, piece_string):
+        try:
+            return self.find_one(Tile.from_string(piece_string))[0]
+        except TypeError:
+            return None
+    
     def perform(self, ply):
         """
         Convenience function for all game logic.  Accepts a ply

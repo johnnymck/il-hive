@@ -63,18 +63,22 @@ class Relocation(Ply):
         return retval
 
 class Tile(object):
-    def __init__(self, color, insect):
+    def __init__(self, color, insect, number=None):
         self._color = color
         self._insect = insect
+        self._number = number
         
     def __eq__(self, other):
-        return self.color is other.color and self.insect is other.insect
+        return self.color is other.color and self.insect is other.insect and self.number is other.number
     
     def __ne__(self, other):
         return not self.__eq__(other)
     
     def __str__(self):
-        return '{0} {1}'.format(self.color.name, self.insect.name)
+        if self._number:
+            return '{0}{1}{2}'.format(self.color.name, self.insect.name, self._number)
+        else:
+            return '{0}{1}'.format(self.color.name, self.insect.name)
     
     @property
     def color(self):
@@ -83,6 +87,10 @@ class Tile(object):
     @property
     def insect(self):
         return self._insect
+
+    @property
+    def number(self):
+        return self._number
 
 class Insect(Enum):
     Queen = 'Q'

@@ -183,6 +183,10 @@ class HiveBoard(object):
         for coord, piece in arrangement.items():
             c = next(k for k in Color if k.value==piece[0])
             i = next(k for k in Insect if k.value==piece[1])
+            if len(piece) == 3:
+                n = int(piece[2])
+            else:
+                n = None
             
             self.place(Tile(c,i), coord)
         

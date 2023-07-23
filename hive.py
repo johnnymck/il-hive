@@ -870,6 +870,7 @@ class HiveBoard(object):
                 yield (coord, {i for i, h in enumerate(stack) if h == q})
 
     def find_one(self, color, insect, number=None):
+        """ Find individual piece upon board and return its coordinates etc """
         q = Tile(color, insect, number)
         for coord, stack in self._pieces.items():
             if q in stack:

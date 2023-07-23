@@ -92,6 +92,17 @@ class Tile(object):
     def number(self):
         return self._number
 
+    @staticmethod
+    def from_string(insect_str):
+        c = next(k for k in Color if k.value==insect_str[0])
+        i = next(k for k in Insect if k.value==insect_str[1])
+        if len(insect_str) == 3:
+            n = int(insect_str[2])
+        else:
+            n=None
+        return Tile(c,i, n)
+
+
 class Insect(Enum):
     Queen = 'Q'
     Ant = 'A'

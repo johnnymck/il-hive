@@ -941,6 +941,14 @@ class HiveBoard(object):
         
         return maximum
             
+    def no_free_pieces(self, free_pieces):
+        try:
+            free_pieces.__next__()
+            return False
+        #for some reason this works but StopIteration doesn't?
+        except Exception:
+            return True
+      
 
 class IllegalMove(Exception):
     def __init__(self, violation):

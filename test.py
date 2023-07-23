@@ -725,11 +725,12 @@ class TestHive(unittest.TestCase):
     def test_free_pieces(self):
         board = hive.HiveBoard()
         self.assertIsNone(board.winner)
+
         
         board.quick_setup({(0,0): 'wQ'})
-        self.assertEqual(set(board.free_pieces(hive.Color.White)), set())
-        self.assertEqual(set(board.free_pieces(hive.Color.Black)), set())
-        
+        self.assertTrue(board.no_free_pieces(board.free_pieces(hive.Color.White)))
+        self.assertTrue(board.no_free_pieces(board.free_pieces(hive.Color.Black)))
+
         board.quick_setup({(0,1): 'bQ'})
         self.assertEqual(set(board.free_pieces(hive.Color.White)), {(0,0)})
         self.assertEqual(set(board.free_pieces(hive.Color.Black)), {(0,1)})

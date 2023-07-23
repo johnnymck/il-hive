@@ -845,6 +845,12 @@ class HiveBoard(object):
             if q in stack:
                 yield (coord, {i for i, h in enumerate(stack) if h == q})
 
+    def find_one(self, color, insect, number=None):
+        q = Tile(color, insect, number)
+        for coord, stack in self._pieces.items():
+            if q in stack:
+                return (coord, {i for i, h in enumerate(stack) if h == q})
+
     def neighbors(self, coord):
         for c in self.hex_neighbors(self.tile_orientation, coord):
             yield (c, self.piece_at(c)) if c in self._pieces else (c, None)

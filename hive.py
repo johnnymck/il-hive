@@ -228,6 +228,15 @@ class HiveBoard(object):
             raise IllegalMove(Violation.May_Not_Place_On_Other_Pieces)
         self._pieces[coords] = [tile]
         
+    def place_relative(self, tile, target, direction):
+        pass
+        #get target tile's coords
+        target_coords, _  = self.find_one(target.color, target.insect, target.number)
+        #get coords of relative position
+        target_coords_adjusted = (target_coords[0] + direction.value[0], target_coords[1] + direction.value[1])
+        self.place(tile, target_coords_adjusted)
+        #if pieces in radius are opposite color raisee other illegal move
+        
     def piece_at(self, coords):
         """Returns the tile (or topmost tile) at a given coordinate"""
         return self._pieces[coords][-1]

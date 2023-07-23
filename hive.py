@@ -242,7 +242,7 @@ class HiveBoard(object):
     def place_relative(self, tile, target, direction):
         pass
         #get target tile's coords
-        target_coords, _  = self.find_one(target.color, target.insect, target.number)
+        target_coords, _  = self.find_one(target)
         #get coords of relative position
         target_coords_adjusted = (target_coords[0] + direction.value[0], target_coords[1] + direction.value[1])
         self.place(tile, target_coords_adjusted)
@@ -868,14 +868,13 @@ class HiveBoard(object):
         for coord, stack in self._pieces.items():
             if q in stack:
                 yield (coord, {i for i, h in enumerate(stack) if h == q})
-
-    def find_one(self, color, insect, number=None):
-        """ Find individual piece upon board and return its coordinates etc """
-        q = Tile(color, insect, number)
+    
+    def find_one(self, piece):
+        """ Overloaded method for find_one using just an instance as a search parameter """
         for coord, stack in self._pieces.items():
-            if q in stack:
-                return (coord, {i for i, h in enumerate(stack) if h == q})
-
+            if piece in stack:
+                return (coord, {i for i, h in enumerate(stack) if h == piece})
+    
     def neighbors(self, coord):
         for c in self.hex_neighbors(self.tile_orientation, coord):
             yield (c, self.piece_at(c)) if c in self._pieces else (c, None)

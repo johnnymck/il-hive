@@ -707,6 +707,12 @@ class HiveBoard(object):
             Insect.Mosquito: mosquito
             }[insect]()
 
+    def all_moves_as_tuples(self, color):
+        """Generates all moves as a tuple of tuples with origin and destination co-ordinates therein"""
+        for origin in self.free_pieces(color):
+            for destination in  self.valid_moves(origin):
+                yield (origin, destination)
+
     def valid_path(self, origin, dest):
         '''this function will find a valid path for the tiles from A->B.
         However, it makes limited assumptions about the piece it is moving.

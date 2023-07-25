@@ -76,9 +76,9 @@ class Tile(object):
     
     def __str__(self):
         if self._number:
-            return '{0}{1}{2}'.format(self.color.name, self.insect.name, self._number)
+            return '{0}{1}{2}'.format(self.color.value, self.insect.value, self._number)
         else:
-            return '{0}{1}'.format(self.color.name, self.insect.name)
+            return '{0}{1}'.format(self.color.value, self.insect.value)
     
     @property
     def color(self):

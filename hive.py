@@ -713,6 +713,14 @@ class HiveBoard(object):
             for destination in  self.valid_moves(origin):
                 yield (origin, destination)
 
+    def all_moves_as_dicts(self, color):
+        """Generates all moves as a dict of tuples with origin and destination co-ordinates, as well as piece type and code therein"""
+        for origin in self.free_pieces(color):
+            piece = self.piece_at(origin)
+            for destination in  self.valid_moves(origin):
+                yield {'orig': origin, 'dest': destination, 'code': str(piece), 'color': piece.color, 'number': piece.number, 'insect': piece.insect}
+
+
     def valid_path(self, origin, dest):
         '''this function will find a valid path for the tiles from A->B.
         However, it makes limited assumptions about the piece it is moving.

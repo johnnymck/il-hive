@@ -720,7 +720,6 @@ class HiveBoard(object):
             for destination in  self.valid_moves(origin):
                 yield {'orig': origin, 'dest': destination, 'code': str(piece), 'color': piece.color, 'number': piece.number, 'insect': piece.insect}
 
-
     def valid_path(self, origin, dest):
         '''this function will find a valid path for the tiles from A->B.
         However, it makes limited assumptions about the piece it is moving.

@@ -18,6 +18,8 @@ class UhpLayer(object):
             output = self.game_string()
         elif x == 'GameStateString':
             output = self.game_state_string()
+        elif x == 'info':
+            output = 'id ' + self.ident_string
         #print
         print(output)
         print('ok')

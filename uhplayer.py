@@ -8,7 +8,10 @@ class UhpLayer(object):
     def __init__(self, agent, ident_string):
         self.agent = agent
         self.ident_string = ident_string
-    
+        # print engine metadata
+        print('id ' + self.ident_string)
+        print('Mosquito;Ladybug;Pillbug')
+        print('ok')    
     def repl(self):
         #read
         x = input()

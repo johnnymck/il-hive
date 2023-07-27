@@ -5,8 +5,9 @@ Glue library for interfacing agents with Mzinga Viewer https://github.com/jonthy
 import hive
 
 class UhpLayer(object):
-    def __init__(self, agent):
+    def __init__(self, agent, ident_string):
         self.agent = agent
+        self.ident_string = ident_string
     
     def repl(self):
         #read

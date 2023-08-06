@@ -1006,6 +1006,9 @@ class HiveBoard(object):
             return S[:1] + flatten(S[1:])
         return flatten(pieces)
       
+    def get_pieces(self):
+        return self._pieces.items()
+
 
 class IllegalMove(Exception):
     def __init__(self, violation):

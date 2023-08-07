@@ -6,6 +6,7 @@ from gymnasium import spaces
 from stable_baselines3.common.env_checker import check_env
 
 class HiveEnv(gym.Env):
+    """Hive game Environment that implements StableBaselines3's gym interface."""
     super().__init__()
 
 

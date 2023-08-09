@@ -807,6 +807,12 @@ class HiveBoard(object):
         """
         Finds all hexes where a new, unused piece can be placed
         """
+        if len(self._pieces) == 0 and color == Color.White:
+            yield (0,0)
+        
+        elif len(self._pieces) == 1 and color == Color.Black:
+            yield (0, 1)
+
         def adjacent_to_opponent(friendly_color, coord):
             for c,t in self.neighbors(coord):
                 if t and t.color is not friendly_color:

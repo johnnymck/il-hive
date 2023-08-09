@@ -1010,10 +1010,18 @@ class HiveBoard(object):
             if isinstance(S[0], list):
                 return flatten(S[0]) + flatten(S[1:])
             return S[:1] + flatten(S[1:])
+        
         return flatten(pieces)
     
     def get_pieces(self):
         return self._pieces.items()
+
+    def available_pieces_from_hand(self, color):
+        on_board = [piece for piece in self.pieces_in_play if piece.color == color]
+        my_pieces = [piece for piece in ALL_PIECES if piece.color == color]
+        in_hand = [piece for piece in my_pieces if piece not in on_board]
+
+        return in_hand
 
 
 class IllegalMove(Exception):

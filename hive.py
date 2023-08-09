@@ -1003,7 +1003,7 @@ class HiveBoard(object):
     def pieces_in_play(self):
         """Returns a list of all pieces on the board """
         pieces = [stack for _, stack in self._pieces.items()]
-        #flatten list to 1D output
+        #flatten list to 1D output TODO edit this
         def flatten(S):
             if S == []:
                 return S
@@ -1011,7 +1011,7 @@ class HiveBoard(object):
                 return flatten(S[0]) + flatten(S[1:])
             return S[:1] + flatten(S[1:])
         return flatten(pieces)
-      
+    
     def get_pieces(self):
         return self._pieces.items()
 

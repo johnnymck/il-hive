@@ -35,7 +35,7 @@ class HiveEnv(gym.Env):
         self.current_player = 1
         self.num_moves = 0
         self.hive = hive.HiveBoard(queen_opening_allowed=True)
-        return self.board.copy()
+        return (self.board.copy(), spaces.Discrete(len(self._get_all_actions(self.color))))
     
     def step(self, action):
         if action < self.placement_action_space.n:  # Placement action

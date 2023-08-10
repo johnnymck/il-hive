@@ -87,6 +87,37 @@ class HiveEnv(gym.Env):
             total += 3
         return total
 
+    def _get_tile_from_encoding(self, encoding):
+        encoding = str(encoding)
+        output_string = ''
+        if len(encoding) == 3:
+            output_string += 'b'
+        else:
+            output_string += 'w'
+        if encoding[-2] == '1':
+            output_string += 'A'
+        elif encoding[-2] == '2':
+            output_string += 'B'
+        elif encoding[-2] == '3':
+            output_string += 'G'
+        elif encoding[-2] == '4':
+            output_string += 'S'
+        elif encoding[-2] == '5':
+            output_string += 'Q'
+        elif encoding[-2] == '6':
+            output_string += 'L'
+        elif encoding[-2] == '7':
+            output_string += 'P'
+        elif encoding[-2] == '8':
+            output_string += 'M'
+        if encoding[-1] == '1':
+            output_string += '1'
+        elif encoding[-1] == '2':
+            output_string += '2'
+        elif encoding[-1] == '3':
+            output_string += '3'
+        return hive.Tile.from_string(output_string)
+    
     def _action_with_grid_offset(self, piece, move):
         from_x = move[0][0] + self.centre_offset[0]
         from_y = move[0][1] + self.centre_offset[1]

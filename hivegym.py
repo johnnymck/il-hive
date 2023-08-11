@@ -23,11 +23,12 @@ class HiveEnv(gym.Env):
     def reset(self, seed=None):
         super().reset(seed=seed)#this line was annoying btw!
         # Reset the environment and return the initial observation
-        self.board = np.zeros((self.grid_size, self.grid_size), dtype=np.int32)
+        self.color = hive.Color.White
+        self.board = np.zeros((self.grid_size, self.grid_size), dtype=np.int8)
         self.current_player = 1
         self.num_moves = 0
         self.hive = hive.HiveBoard(queen_opening_allowed=True)
-        return (self.board.copy(), spaces.Discrete(len(self._get_all_actions(self.color))))
+        return (self.board.copy(), spaces.Discrete(len(self._get_all_actions())))
     
     def step(self, action):
         if action < self.placement_action_space.n:  # Placement action

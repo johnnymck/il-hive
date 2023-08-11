@@ -15,17 +15,8 @@ class HiveEnv(gym.Env):
         self.hive = hive.HiveBoard(queen_opening_allowed=True)
         self.centre_offset = 13
         self.color = hive.Color.White
-
-        self.placement_action_space = spaces.Discrete(self.num_piece_types * self.grid_size * self.grid_size)
-        self.movement_action_space = spaces.MultiDiscrete([
-            self.num_piece_types,  # Piece type
-            self.grid_size,        # From row
-            self.grid_size,        # From column
-            self.grid_size,        # To row
-            self.grid_size         # To column
-        ])
-        self.observation_space = spaces.Box(low=0, high=self.num_piece_types, shape=(self.grid_size, self.grid_size, 2), dtype=np.int32)
-        self.board = np.zeros((self.grid_size, self.grid_size), dtype=np.int32)
+        self.observation_space = spaces.Box(low=0, high=self.num_piece_types, shape=(self.grid_size, self.grid_size), dtype=np.int8)
+        self.board = np.zeros((self.grid_size, self.grid_size), dtype=np.int8)
         self.current_player = 1
         self.num_moves = 0
 

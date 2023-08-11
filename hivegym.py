@@ -37,7 +37,7 @@ class HiveEnv(gym.Env):
         piece, from_x, from_y, to_x, to_y = actions[action]
         term = False
         trunc = False
-        if from_x == -1 and from_y == -1:
+        if from_x == -99 and from_y == -99:
             piece_obj = self._get_tile_from_encoding(piece)
             self.hive.place(piece_obj, (to_x, to_y))
         else:
@@ -146,7 +146,7 @@ class HiveEnv(gym.Env):
         
         for placement in self.hive.valid_placements(self.color):
             for piece in self.hive.available_pieces_from_hand(self.color):
-                actions.append((self._get_tile_encoding(piece), -1, -1, placement[0], placement[1]))
+                actions.append((self._get_tile_encoding(piece), -99, -99, placement[0], placement[1]))
         
         return actions
 

@@ -66,7 +66,9 @@ class HiveEnv(gym.Env):
         #expects (obs_state, reward, terminal, truncated, info)
         return (self.board.copy(), reward, term, trunc, {})
 
-        return self.board.copy(), reward, done, info
+    def _push_hive_to_grid(self):
+        for coords, stack in self.hive.get_pieces():
+            self.board[coords[0]+self.centre_offset][coords[1]+self.centre_offset] = self._get_tile_encoding(stack[-1])
     
     def _get_tile_encoding(self, tile):
         """Quick and dirty method to translate pieces into a simple integer to hopefully

@@ -142,7 +142,7 @@ class HiveEnv(gym.Env):
         actions = []
         for move in self.hive.all_moves_as_tuples(self.color):
             piece = self._get_tile_encoding(self.hive.piece_at(move[0]))
-            actions.apend(self._action_with_grid_offset(piece, move))
+            actions.append(self._action_with_grid_offset(piece, move))
         
         for placement in self.hive.valid_placements(self.color):
             for piece in self.hive.available_pieces_from_hand(self.color):

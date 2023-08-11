@@ -132,10 +132,10 @@ class HiveEnv(gym.Env):
         return hive.Tile.from_string(output_string)
     
     def _action_with_grid_offset(self, piece, move):
-        from_x = move[0][0] + self.centre_offset[0]
-        from_y = move[0][1] + self.centre_offset[1]
-        to_x = move[1][0] + self.centre_offset[0]
-        to_y = move[1][1] + self.centre_offset[1]
+        from_x = move[0][0]
+        from_y = move[0][1]
+        to_x = move[1][0]
+        to_y = move[1][1]
         return (piece, from_x, from_y, to_x, to_y)
     
     def _get_all_actions(self):

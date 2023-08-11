@@ -13,7 +13,7 @@ class HiveEnv(gym.Env):
         self.num_piece_types = 8 # ant, grasshopper, beetle, spider, queen, pillbug, mosquito, ladybug
         self.max_moves = 149 # end it before we get to 150 moves because that would be mental
         self.hive = hive.HiveBoard(queen_opening_allowed=True)
-        self.centre_offset = (13, 13)
+        self.centre_offset = 13
         self.color = hive.Color.White
 
         self.placement_action_space = spaces.Discrete(self.num_piece_types * self.grid_size * self.grid_size)

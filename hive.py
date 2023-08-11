@@ -140,6 +140,38 @@ class Rule(Enum):
     Leech_Move = 3
     Leech_Relocate = 4
     
+ALL_PIECES = [
+    Tile(Color.Black, Insect.Ant, 1),
+    Tile(Color.Black, Insect.Ant, 2),
+    Tile(Color.Black, Insect.Ant, 3),
+    Tile(Color.Black, Insect.Grasshopper, 1),
+    Tile(Color.Black, Insect.Grasshopper, 2),
+    Tile(Color.Black, Insect.Grasshopper, 3),
+    Tile(Color.Black, Insect.Spider, 1),
+    Tile(Color.Black, Insect.Spider, 2),
+    Tile(Color.Black, Insect.Beetle, 1),
+    Tile(Color.Black, Insect.Beetle, 2),
+    Tile(Color.Black, Insect.Mosquito),
+    Tile(Color.Black, Insect.Ladybug),
+    Tile(Color.Black, Insect.Pillbug),
+    Tile(Color.Black, Insect.Queen),
+
+    Tile(Color.White, Insect.Ant, 1),
+    Tile(Color.White, Insect.Ant, 2),
+    Tile(Color.White, Insect.Ant, 3),
+    Tile(Color.White, Insect.Grasshopper, 1),
+    Tile(Color.White, Insect.Grasshopper, 2),
+    Tile(Color.White, Insect.Grasshopper, 3),
+    Tile(Color.White, Insect.Spider, 1),
+    Tile(Color.White, Insect.Spider, 2),
+    Tile(Color.White, Insect.Beetle, 1),
+    Tile(Color.White, Insect.Beetle, 2),
+    Tile(Color.White, Insect.Mosquito),
+    Tile(Color.White, Insect.Ladybug),
+    Tile(Color.White, Insect.Pillbug),
+    Tile(Color.White, Insect.Queen),
+]
+    
 class Violation(Enum):
     Queen_Bee_Opening_Prohibited = 'Current rules disallow Queen Bee opening'
     Queen_Bee_Must_Be_Played = 'Queen Bee must be placed by turn 4'

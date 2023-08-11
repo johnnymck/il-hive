@@ -31,22 +31,41 @@ class HiveEnv(gym.Env):
         return (self.board.copy(), spaces.Discrete(len(self._get_all_actions())))
     
     def step(self, action):
-        if action < self.placement_action_space.n:  # Placement action
-            piece_type = action // (self.grid_size * self.grid_size)
-            row = (action % (self.grid_size * self.grid_size)) // self.grid_size
-            col = (action % (self.grid_size * self.grid_size)) % self.grid_size
-            
-            # Perform placement logic here
-            # ...
-            
-        else:  # Movement action
-            piece_type, from_row, from_col, to_row, to_col = self.movement_action_space[action - self.placement_action_space.n]
-            
-            # Perform movement logic here
-            # ...
-        
-        # Update the environment state, calculate reward, done, and info
-        
+        self.num_moves += 1
+        actions = self._get_all_actions()
+        print(actions[action])
+        piece, from_x, from_y, to_x, to_y = actions[action]
+        term = False
+        trunc = False
+        if from_x == -1 and from_y == -1:
+            piece_obj = self._get_tile_from_encoding(piece)
+            self.hive.place(piece_obj, (to_x, to_y))
+        else:
+            self.hive.move((from_x , from_y), (to_x, to_y))
+        if self.hive.winner == self.color:
+            reward = 1
+            term = True
+        elif self.hive.winner == False:
+            # draw
+            reward = 0
+            term = True
+        elif self.hive.winner == None:
+            # no winnder, no reward, game continues
+            reward = 0
+        else:
+            # lost - negative reward, game over
+            reward = -1
+            term = True
+        if self.num_moves > self.max_moves:
+            trunc = True
+        if self.color == hive.Color.White:
+            self.color = hive.Color.Black
+        else:
+            self.color = hive.Color.White
+        self._push_hive_to_grid()
+        #expects (obs_state, reward, terminal, truncated, info)
+        return (self.board.copy(), reward, term, trunc, {})
+
         return self.board.copy(), reward, done, info
     
     def _get_tile_encoding(self, tile):

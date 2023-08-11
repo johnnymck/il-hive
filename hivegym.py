@@ -16,6 +16,7 @@ class HiveEnv(gym.Env):
         self.centre_offset = 13
         self.color = hive.Color.White
         self.observation_space = spaces.Box(low=0, high=self.num_piece_types, shape=(self.grid_size, self.grid_size), dtype=np.int8)
+        self.action_space = spaces.Discrete(len(self._get_all_actions()))       
         self.board = np.zeros((self.grid_size, self.grid_size), dtype=np.int8)
         self.current_player = 1
         self.num_moves = 0
@@ -33,7 +34,6 @@ class HiveEnv(gym.Env):
     def step(self, action):
         self.num_moves += 1
         actions = self._get_all_actions()
-        print(actions[action])
         piece, from_x, from_y, to_x, to_y = actions[action]
         term = False
         trunc = False
@@ -63,6 +63,7 @@ class HiveEnv(gym.Env):
         else:
             self.color = hive.Color.White
         self._push_hive_to_grid()
+        self.action_space = spaces.Discrete(len(self._get_all_actions()))
         #expects (obs_state, reward, terminal, truncated, info)
         return (self.board.copy(), reward, term, trunc, {})
 
@@ -149,10 +150,6 @@ class HiveEnv(gym.Env):
                 actions.append((self._get_tile_encoding(piece), -99, -99, placement[0], placement[1]))
         
         return actions
-
-    @property
-    def action_space(self):
-        return spaces.Discrete(len(self._get_all_actions()))
 
 if __name__ == '__main__':
     hivegym = HiveEnv()

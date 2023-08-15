@@ -22,7 +22,7 @@ class HiveEnv(gym.Env):
         self.centre_offset = 13
         self.color = hive.Color.White
         self.observation_space = spaces.Box(low=0, high=self.num_piece_types, shape=(self.grid_size, self.grid_size), dtype=np.int8)
-        self.action_space = spaces.Discrete(len(self._get_all_actions()))       
+        self.action_space = spaces.Discrete(14*self.grid_size*self.grid_size)   
         self.board = np.zeros((self.grid_size, self.grid_size), dtype=np.int8)
         self.current_player = 1
         self.num_moves = 0

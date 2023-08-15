@@ -5,6 +5,12 @@ import hive
 from gymnasium import spaces
 from stable_baselines3.common.env_checker import check_env
 
+TRUE_ACTION_REWARD = 1
+FALSE_ACTION_REWARD = -1
+GAME_WIN_REWARD = 100
+GAME_LOSS_REWARD = -100
+GAME_DRAW_REWARD = 50
+
 class HiveEnv(gym.Env):
     """Hive game Environment that implements StableBaselines3's gym interface."""
     def __init__(self):

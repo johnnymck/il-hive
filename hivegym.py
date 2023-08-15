@@ -35,7 +35,7 @@ class HiveEnv(gym.Env):
         self.current_player = 1
         self.num_moves = 0
         self.hive = hive.HiveBoard(queen_opening_allowed=True)
-        return (self.board.copy(), spaces.Discrete(len(self._get_all_actions())))
+        return (self.board.copy(), spaces.Discrete(14*self.grid_size*self.grid_size))
     
     def step(self, action):
         reward = 0
@@ -77,8 +77,6 @@ class HiveEnv(gym.Env):
             #expects (obs_state, reward, terminal, truncated, info)
             term = False
             trunc = False
-        print('current reward =', reward)
-        print('current move =', self.num_moves)
         return (self.board.copy(), reward, term, trunc, {})
 
     def _push_hive_to_grid(self):

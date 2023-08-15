@@ -38,39 +38,47 @@ class HiveEnv(gym.Env):
         return (self.board.copy(), spaces.Discrete(len(self._get_all_actions())))
     
     def step(self, action):
-        self.num_moves += 1
-        actions = self._get_all_actions()
-        piece, from_x, from_y, to_x, to_y = actions[action]
-        term = False
-        trunc = False
-        if from_x == -99 and from_y == -99:
-            piece_obj = self._get_tile_from_encoding(piece)
-            self.hive.place(piece_obj, (to_x, to_y))
+        reward = 0
+        if self.is_action_legal(action):
+            piece, from_x, from_y, to_x, to_y = self.convert_action_to_move(action)
+            reward += TRUE_ACTION_REWARD
+            self.num_moves += 1
+            term = False
+            trunc = False
+            if from_x == -99 and from_y == -99:
+                piece_obj = self._get_tile_from_encoding(piece)
+                self.hive.place(piece_obj, (to_x, to_y))
+            else:
+                self.hive.move((from_x , from_y), (to_x, to_y))
+            if self.hive.winner == self.color:
+                reward = 1
+                term = True
+            elif self.hive.winner == False:
+                # draw
+                reward = 0
+                term = True
+            elif self.hive.winner == None:
+                # no winnder, no reward, game continues
+                reward += 0
+            else:
+                # lost - negative reward, game over
+                reward += -1000
+                term = True
+            if self.num_moves > self.max_moves:
+                trunc = True
+            if self.color == hive.Color.White:
+                self.color = hive.Color.Black
+            else:
+                self.color = hive.Color.White
+                self._push_hive_to_grid()
         else:
-            self.hive.move((from_x , from_y), (to_x, to_y))
-        if self.hive.winner == self.color:
-            reward = 1
-            term = True
-        elif self.hive.winner == False:
-            # draw
-            reward = 0
-            term = True
-        elif self.hive.winner == None:
-            # no winnder, no reward, game continues
-            reward = 0
-        else:
-            # lost - negative reward, game over
-            reward = -1
-            term = True
-        if self.num_moves > self.max_moves:
-            trunc = True
-        if self.color == hive.Color.White:
-            self.color = hive.Color.Black
-        else:
-            self.color = hive.Color.White
-        self._push_hive_to_grid()
-        self.action_space = spaces.Discrete(len(self._get_all_actions()))
-        #expects (obs_state, reward, terminal, truncated, info)
+            reward += FALSE_ACTION_REWARD
+            #don't update anything
+            #expects (obs_state, reward, terminal, truncated, info)
+            term = False
+            trunc = False
+        print('current reward =', reward)
+        print('current move =', self.num_moves)
         return (self.board.copy(), reward, term, trunc, {})
 
     def _push_hive_to_grid(self):
@@ -106,7 +114,7 @@ class HiveEnv(gym.Env):
         elif tile.number == 3:
             total += 3
         return total
-
+    
     def _get_tile_from_encoding(self, encoding):
         encoding = str(encoding)
         output_string = ''
@@ -144,6 +152,47 @@ class HiveEnv(gym.Env):
         to_x = move[1][0]
         to_y = move[1][1]
         return (piece, from_x, from_y, to_x, to_y)
+    
+    def all_moves_as_indices(self):
+        for i in range(14):
+            for j in range(-14, 14):
+                for k in range(-14, 14):
+                    yield (i, (j, k))
+    
+    def _action_to_move(self, action):
+        all_actions = list(self.all_moves_as_indices())
+        return all_actions[action]
+
+    def is_action_legal(self, action):
+        # get list of legal moves
+        actions = self._get_all_actions()
+        # convert int to piece
+        move = self.convert_action_to_move(action)
+        if move in actions:
+            return True
+        else:
+            return False
+
+    def int_to_piece(self, n):
+        if self.color == hive.Color.White:
+            return hive.Tile.from_string(['wA1', 'wA2', 'wA3', 'wG1', 'wG2', 'wG3', 'wS1', 'wS2', 'wB1', 'wB2', 'wQ', 'wM', 'wL', 'wP'][n])
+        else:
+            return hive.Tile.from_string(['bA1', 'bA2', 'bA3', 'bG1', 'bG2', 'bG3', 'bS1', 'bS2', 'bB1', 'bB2', 'bQ', 'bM', 'bL', 'bP'][n])
+
+    def convert_action_to_move(self, action):
+        move = self._action_to_move(action)
+        piece = move[0]
+        piece = self.int_to_piece(piece)
+        piece_str = str(piece)
+        piece = self._get_tile_encoding(piece)
+        # get location of piece in move
+        loc = self.hive.get_current_position(piece_str)
+        if loc == None:
+            # not on board, coords = -99, -99
+            loc = (-99, -99)
+        # confirm piece can move to location (T or F)
+        move_as_tuple = (piece, loc[0], loc[1], move[1][0], move[1][1])
+        return move_as_tuple
     
     def _get_all_actions(self):
         actions = []

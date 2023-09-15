@@ -102,3 +102,4 @@ $RECYCLE.BIN/
 
 # Ignore PNG files
 valid_pgns/
+.ipynb_checkpoints
